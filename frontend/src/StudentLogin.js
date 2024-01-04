@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const LoginForm = styled.form`
   max-width: 300px;
   width: 100%;
   text-align: center;
+  
 
   h2 {
     margin-bottom: 20px;
@@ -42,7 +43,7 @@ const LoginForm = styled.form`
     border-radius: 4px;
     cursor: pointer;
   }
-`;
+  `;
 
 const StudentLogin = () => {
   const [username, setUsername] = useState('');
@@ -56,12 +57,23 @@ const StudentLogin = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Add authentication logic here (e.g., API call, check credentials)
+    try {
+      const response = await axios.post('/api/student-login/', {
+        username,
+        password,
+      });
 
-    // For now, let's log the credentials to the console
+      console.log(response.data);
+      // Handle success, e.g., redirect to the student dashboard
+
+    } catch (error) {
+      console.error(error.response.data);
+      // Handle error, e.g., show an error message
+    }
+
     console.log('Username:', username);
     console.log('Password:', password);
   };
@@ -87,3 +99,6 @@ const StudentLogin = () => {
 };
 
 export default StudentLogin;
+
+
+

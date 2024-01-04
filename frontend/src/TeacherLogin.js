@@ -1,7 +1,6 @@
-// Login.js
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -43,9 +42,9 @@ const LoginForm = styled.form`
     border-radius: 4px;
     cursor: pointer;
   }
-`;
+  `;
 
-const Login = () => {
+const TeacherLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -57,12 +56,23 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Add authentication logic here (e.g., API call, check credentials)
+    try {
+      const response = await axios.post('/api/teacher-login/', {
+        username,
+        password,
+      });
 
-    // For now, let's log the credentials to the console
+      console.log(response.data);
+      // Handle success, e.g., redirect to the teacher dashboard
+
+    } catch (error) {
+      console.error(error.response.data);
+      // Handle error, e.g., show an error message
+    }
+
     console.log('Username:', username);
     console.log('Password:', password);
   };
@@ -87,5 +97,6 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default TeacherLogin;
+
 
